@@ -1,0 +1,19 @@
+.wavy {
+    background: linear-gradient(90deg, #F4B95F, #DAA65D, #525252);
+    background-size: 300% 300%;
+    animation: gradient 5s alternate infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 100%;
+    }
+  }

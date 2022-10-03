@@ -13,9 +13,7 @@ import HomePage from '_pages/HomePage';
 import TodoPage from '_pages/TodoPage';
 import SettingsPage from '_pages/SettingsPage';
 import LostPage from '_pages/LostPage';
-
-import Navigation from '_organisms/Navigation';
-import Footer from '_organisms/Footer';
+import BodyLayout from '../../organisms/BodyLayout';
 
 import styles from './styles.module.css';
 
@@ -41,19 +39,19 @@ export default function Main() {
   return !loading && (
     <React.Fragment>
       <ReactNotifications />
-      <Navigation />
-      <div className={styles.root}>
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="home" element={<HomePage />} />
-          <Route path="todo" element={<TodoPage />} />
-          <Route path="settings/*" element={<SettingsPage />} />
-          <Route path="*" element={<LostPage />} />
-        </Routes>
-      </div>
-      <Footer />
+      <BodyLayout>
+        <div className={styles.root}>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="home" element={<HomePage />} />
+            <Route path="todo" element={<TodoPage />} />
+            <Route path="settings/*" element={<SettingsPage />} />
+            <Route path="*" element={<LostPage />} />
+          </Routes>
+        </div>
+      </BodyLayout>
     </React.Fragment>
   );
 }
