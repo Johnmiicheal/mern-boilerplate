@@ -103,6 +103,7 @@ export default function Login() {
               src="/images/grayfull.png"
               alt="grayfull"
               w={40}
+              pointerEvents="none"
             />
             <Text mt={2} fontSize={20} fontWeight={500}>
               Login to GrayBook
@@ -117,15 +118,16 @@ export default function Login() {
               Login with Google
             </Button>
 
-            <Flex direction="column" mt={10}>
+            <Flex direction="column" mt={10} justify="center">
               <FormControl>
                 <FormInput
                   onChange={updateEmail}
-                  placeholder="email"
+                  placeholder="Email Address"
                   value={email}
                   type="email"
                   leftIcon={IoPersonOutline}
                   label="Email"
+                  size="lg"
                 />
                 <FormInput
                   onChange={updatePassword}
@@ -134,19 +136,21 @@ export default function Login() {
                   leftIcon={IoLockClosedOutline}
                   type="password"
                   label="Password"
+                  size="lg"
                 />
               </FormControl>
 
-              <Flex justify="center">
-                <Text
+              <Flex justify="start">
+                <Link
                   color="#F4B95F"
                   fontSize={12}
                   fontWeight={500}
                   mt={2}
                   mb={14}
+                  href="/recovery"
                 >
                   Forgot Password?
-                </Text>
+                </Link>
                 <Text
                   color="gray.500"
                   fontSize={12}
@@ -185,6 +189,7 @@ export default function Login() {
               src="/images/grayart.png"
               alt="gray2art"
               w="70%"
+              pointerEvents="none"
             />
           </Flex>
         </Flex>

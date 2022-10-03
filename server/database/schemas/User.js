@@ -10,8 +10,8 @@ const userSchema = new Schema({
   email: { type: String, lowercase: true, required: true, unique: true, immutable: true },
   password: { type: String, required: true },
   profile_pic: { type: String },
-  admin_name: { type: String, maxlength: 20 },
-  phone_number: { type: Number, maxlength: 11, required: true },
+  adminName: { type: String, maxlength: 20 },
+  phoneNumber: { type: Number, maxlength: 11, required: true },
   created_at: { type: Date, default: Date.now, immutable: true },
   updated_at: { type: Date },
 }, { versionKey: false });
@@ -25,14 +25,14 @@ userSchema.plugin(AutoIncrementID, {
 });
 
 userSchema.virtual('admin_user').get(function() {
-  if (this.admin_name) {
-    return `${this.admin_name}`;
+  if (this.adminName) {
+    return `${this.adminName}`;
   }
   return undefined;
 });
 
 userSchema.virtual('initials').get(function() {
-  return this.admin_name && `${this.admin_name[0].concat(this.admin_name[1]).toUpperCase()}`;
+  return this.adminName && `${this.adminName[0].concat(this.adminName[1]).toUpperCase()}`;
 });
 
 userSchema.methods.validPassword = function(password) {

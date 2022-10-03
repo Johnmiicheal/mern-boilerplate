@@ -1,2 +1,9 @@
 // Images
 import './images/default-profile.png';
+import './images/grayfull.png';
+import './images/gray2full.png';
+import './images/grayart.png';
+import './images/gray2art.png';
+import './images/graylogo.png';
+import './images/gray2logo.png';
+import './images/grayaxis.png';

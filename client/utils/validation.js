@@ -1,26 +1,37 @@
 import R from 'ramda';
 
-export const validateUsername = username => {
+export const validateAdminName = adminName => {
   let valid = true;
-  let message = 'Username Valid';
+  let message = 'adminName Valid';
 
-  if (!R.match(/^[a-zA-Z0-9_]+$/, username).length) {
+  if (!R.match(/[a-zA-Z]/, adminName).length) {
     message = 'Invalid character used';
     valid = false;
-  } else if (username.length < 4) {
-    message = 'Username must be at least four characters';
+  } else if (adminName.length < 4) {
+    message = 'adminName must be at least four characters';
     valid = false;
-  } else if (username.length > 20) {
-    message = 'Username must be 20 characters or less';
+  } else if (adminName.length > 20) {
+    message = 'adminName must be 20 characters or less';
     valid = false;
-  } else if (R.match(/[a-zA-Z]/g, username).length < 4) {
-    message = 'Username must include at least four letters';
+  } else if (R.match(/[a-zA-Z]/g, adminName).length < 2) {
+    message = 'adminName must include at least two letters';
     valid = false;
   }
   return { valid, message };
 };
 
-export const validatePassword = (username, password) => {
+export const validateEmail = email => {
+  let valid = true;
+  let message = 'Email Valid';
+
+  if (!R.match(/@/, email).length) {
+    message = 'Email must contain @ symbol';
+    valid = false;
+  }
+  return { valid, message };
+};
+
+export const validatePassword = (adminName, password) => {
   let valid = true;
   let message = 'Password valid';
 
@@ -30,14 +41,37 @@ export const validatePassword = (username, password) => {
   } else if (password.length > 16) {
     valid = false;
     message = 'Password must be 16 characters or less';
-  } else if (username === password) {
+  } else if (adminName === password) {
     valid = false;
-    message = 'Username and password must be different';
+    message = 'Admin Name and Password must be different';
   } else if (!R.match(/[0-9]/, password).length) {
     valid = false;
     message = 'Password must include at least one number';
   }
 
+  return { valid, message };
+};
+
+export const validatePhoneNumber = (phoneNumber, password) => {
+  let valid = true;
+  let message = 'Phone Number valid';
+
+  if (phoneNumber.length < 11) {
+    valid = false;
+    message = 'Phone Number is Invalid';
+  } else if (phoneNumber.length > 11) {
+    valid = false;
+    message = 'Password must be 11 digits';
+  } else if (password === phoneNumber) {
+    valid = false;
+    message = 'Phone Number and Password must be different';
+  } else if (!R.match(/[0-9]/, password).length) {
+    valid = false;
+    message = 'Password must include at least 9 numbers';
+  } else if (R.match(/[a-zA-Z]/g, phoneNumber).length) {
+    message = 'Phone Numbers should not include letters';
+    valid = false;
+  }
   return { valid, message };
 };
 

@@ -23,20 +23,24 @@ export default function FormInput({
   placeholder,
   type,
   leftIcon,
+  size,
 }) {
   return (
     (
       <FormControl className={className}>
         <FormLabel>{label}</FormLabel>
-        <InputGroup>
+        <InputGroup justify="center">
         <InputLeftElement pointerEvents="none">
-            <Icon as={leftIcon} />
+            <Icon as={leftIcon} w={5} h={5} mt={1} />
           </InputLeftElement>
           <Input
             type={type}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            focusBorderColor="#F4B95F"
+            mb={2}
+            size={size}
           />
         </InputGroup>
       </FormControl>
@@ -48,6 +52,7 @@ FormInput.defaultProps = {
   className: '',
   leftIcon: undefined,
   type: 'text',
+  size: 'md',
 };
 
 FormInput.propTypes = {
@@ -58,4 +63,5 @@ FormInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   leftIcon: PropTypes.func,
   type: PropTypes.string,
+  size: PropTypes.string,
 };
