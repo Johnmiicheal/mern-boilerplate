@@ -2,21 +2,6 @@ import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import R from 'ramda';
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
-// import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons/faTriangleExclamation';
-
-// import Box from 'react-bulma-companion/lib/Box';
-// import Button from 'react-bulma-companion/lib/Button';
-// import Title from 'react-bulma-companion/lib/Title';
-// import Field from 'react-bulma-companion/lib/Field';
-// import Control from 'react-bulma-companion/lib/Control';
-// import Icon from 'react-bulma-companion/lib/Icon';
-// import Input from 'react-bulma-companion/lib/Input';
-// import Label from 'react-bulma-companion/lib/Label';
-// import Help from 'react-bulma-companion/lib/Help';
-
 import useKeyPress from '_hooks/useKeyPress';
 import { postCheckUser, postCheckPhoneNumber } from '_api/users';
 import {
@@ -30,10 +15,8 @@ import { attemptRegister } from '_thunks/auth';
 import BodyLayout from '_organisms/BodyLayout';
 
 import {
-  Box,
   Flex,
   Text,
-  Center,
   Image,
   FormControl,
   FormLabel,
@@ -43,16 +26,14 @@ import {
   InputLeftAddon,
   InputGroup,
   Link,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import styles from './Register.module.css';
 
 export default function Register() {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -85,7 +66,7 @@ export default function Register() {
   const checkPhoneNumber = (newPhoneNumber) => {
     const { valid, message } = validatePhoneNumber(newPhoneNumber);
     if (valid) {
-      setPhoneNumberMessage('Checking email...');
+      setPhoneNumberMessage('Checking Phone Number...');
       setPhoneNumberAvailable(false);
 
       postCheckPhoneNumber(newPhoneNumber)
@@ -169,87 +150,10 @@ export default function Register() {
 
   useKeyPress('Enter', register);
 
-  return (
-  // <Box className={styles.root}>
-  //   <Title size="3">
-  //     Sign Up
-  //   </Title>
-  //   <hr className="separator" />
-  //   <p className="has-space-below">
-  //     Already a member?&nbsp;
-  //     <Link to="/login">
-  //       Login
-  //     </Link>
-  //   </p>
-  //   <Field>
-  //     <Label htmlFor="email">
-  //       email
-  //     </Label>
-  //     <Control iconsRight>
-  //       <Input
-  //         id="email"
-  //         placeholder="email"
-  //         color={email ? (emailAvailable ? 'success' : 'danger') : undefined}
-  //         value={email}
-  //         onChange={handleEmailChange}
-  //       />
-  //       {email && (
-  //         <Icon
-  //           size="small"
-  //           align="right"
-  //           color={emailAvailable ? 'success' : 'danger'}
-  //         >
-  //           <FontAwesomeIcon
-  //             icon={emailAvailable ? faCheck : faTriangleExclamation}
-  //           />
-  //         </Icon>
-  //       )}
-  //     </Control>
-  //     {email && (
-  //       <Help color={emailAvailable ? 'success' : 'danger'}>
-  //         {emailMessage}
-  //       </Help>
-  //     )}
-  //   </Field>
-  //   <Field>
-  //     <Label htmlFor="password">
-  //       Password
-  //     </Label>
-  //     <Control iconsRight>
-  //       <Input
-  //         id="password"
-  //         placeholder="Password"
-  //         type="password"
-  //         color={password ? (passwordValid ? 'success' : 'danger') : undefined}
-  //         value={password}
-  //         onChange={handlePasswordChange}
-  //       />
-  //       {password && (
-  //         <Icon
-  //           size="small"
-  //           align="right"
-  //           color={passwordValid ? 'success' : 'danger'}
-  //         >
-  //           <FontAwesomeIcon
-  //             icon={passwordValid ? faCheck : faTriangleExclamation}
-  //           />
-  //         </Icon>
-  //       )}
-  //     </Control>
-  //     {password && (
-  //       <Help color={passwordValid ? 'success' : 'danger'}>
-  //         {passwordMessage}
-  //       </Help>
-  //     )}
-  //   </Field>
-  //   <hr className="separator" />
-  //   <div className="has-text-right">
-  //     <Button color="success" onClick={register} disabled={!passwordValid || !emailAvailable}>
-  //       Create Account
-  //     </Button>
-  //   </div>
-  // </Box>
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
+  return (
     <BodyLayout>
       <div className={styles.rewavy}>
         <Flex
@@ -282,9 +186,9 @@ export default function Register() {
               >
                 Already have an account?
                 {' '}
-                <NextLink href="/login" passHref>
-                  <Link color="#F4B95F">Login Here</Link>
-                </NextLink>
+                <Link color="#F4B95F" href="/login">
+                  Login Here
+                </Link>
               </Text>
             </Flex>
             <Button
@@ -306,10 +210,9 @@ export default function Register() {
                   variant="outline"
                   mb={2}
                   focusBorderColor="#F4B95F"
+                  onChange={handleAdminNameChange}
                 />
-                <FormErrorMessage>
-                  {adminNameMessage}
-                </FormErrorMessage>
+                <FormErrorMessage>{adminNameMessage}</FormErrorMessage>
               </FormControl>
 
               <FormControl>
@@ -320,34 +223,44 @@ export default function Register() {
                   variant="outline"
                   mb={2}
                   focusBorderColor="#F4B95F"
+                  onChange={handleEmailChange}
                 />
-                <FormErrorMessage>
-                  {emailMessage}
-                </FormErrorMessage>
+                <FormErrorMessage>{emailMessage}</FormErrorMessage>
               </FormControl>
 
-              <FormControl>
+              <FormControl isInvalid={phoneNumberMessage}>
                 <FormLabel fontSize={14}>Phone Number</FormLabel>
                 <InputGroup>
                   <InputLeftAddon>+234</InputLeftAddon>
-                  <Input type="tel" placeholder="phone number" variant="outline" mb={2} focusBorderColor="#F4B95F" />
+                  <Input
+                    type="tel"
+                    placeholder="Phone Number"
+                    variant="outline"
+                    mb={2}
+                    focusBorderColor="#F4B95F"
+                    onChange={handlePhoneNumberChange}
+                  />
                 </InputGroup>
-                <FormErrorMessage>
-                  {phoneNumberMessage}
-                </FormErrorMessage>
+                <FormErrorMessage>{phoneNumberMessage}</FormErrorMessage>
               </FormControl>
 
               <FormControl>
                 <FormLabel fontSize={14}>Password</FormLabel>
-                <Input
-                  placeholder="Password"
-                  type="password"
-                  variant="outline"
-                  focusBorderColor="#F4B95F"
-                />
-                <FormErrorMessage>
-                  {passwordMessage}
-                </FormErrorMessage>
+                <InputGroup>
+                  <Input
+                    placeholder="Password"
+                    type={show ? 'text' : 'password'}
+                    variant="outline"
+                    focusBorderColor="#F4B95F"
+                    onChange={handlePasswordChange}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                <FormErrorMessage>{passwordMessage}</FormErrorMessage>
               </FormControl>
               <Button
                 mt={4}
@@ -355,8 +268,9 @@ export default function Register() {
                 bg="#F4B95F"
                 color="white"
                 _hover={{ bg: '#DAA65D' }}
-                onClick={() => router.push('/onboarding')}
+                onClick={register}
                 type="submit"
+                isDisabled={!passwordValid || !emailAvailable}
               >
                 Continue
               </Button>

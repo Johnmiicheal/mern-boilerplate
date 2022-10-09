@@ -13,9 +13,8 @@ import HomePage from '_pages/HomePage';
 import TodoPage from '_pages/TodoPage';
 import SettingsPage from '_pages/SettingsPage';
 import LostPage from '_pages/LostPage';
+import OnboardingPage from '_pages/OnboardPage/OnboardingPage';
 import BodyLayout from '../../organisms/BodyLayout';
-
-import styles from './styles.module.css';
 
 export default function Main() {
   const dispatch = useDispatch();
@@ -40,17 +39,16 @@ export default function Main() {
     <React.Fragment>
       <ReactNotifications />
       <BodyLayout>
-        <div className={styles.root}>
-          <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="home" element={<HomePage />} />
-            <Route path="todo" element={<TodoPage />} />
-            <Route path="settings/*" element={<SettingsPage />} />
-            <Route path="*" element={<LostPage />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="todo" element={<TodoPage />} />
+          <Route path="settings/*" element={<SettingsPage />} />
+          <Route path="/onboarding" element={<OnboardingPage />} />
+          <Route path="*" element={<LostPage />} />
+        </Routes>
       </BodyLayout>
     </React.Fragment>
   );

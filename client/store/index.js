@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createLogger } from 'redux-logger';
@@ -11,15 +11,16 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
 });
 
 const middlewares = [routerMiddleware, thunk];
+const logger = createLogger({ collapsed: true, diff: true });
 
 if (process.env.NODE_ENV === 'development') {
-  const logger = createLogger({ collapsed: true, diff: true });
   middlewares.push(logger);
 }
 
-export const store = createStore(
-  createRootReducer(routerReducer),
-  applyMiddleware(...middlewares),
-);
+export const store = configureStore({
+  reducer: createRootReducer(routerReducer),
+  middleware: [routerMiddleware, thunk, logger],
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
 export const history = createReduxHistory(store);

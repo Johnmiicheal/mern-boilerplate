@@ -1,9 +1,9 @@
 import request from 'superagent';
 import { handleSuccess, handleError } from '_utils/api';
 
-export const postCheckUser = email =>
+export const postCheckUser = adminName =>
   request.post('/api/users/checkuser')
-    .send({ email })
+    .send({ adminName })
     .then(handleSuccess)
     .catch(handleError);
 

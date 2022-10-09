@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable quotes */
 /* eslint-disable no-alert */
@@ -22,7 +23,6 @@ import R from "ramda";
 
 import useKeyPress from "_hooks/useKeyPress";
 import { attemptLogin } from "_thunks/auth";
-import FormInput from "_molecules/FormInput";
 
 import { IoPersonOutline, IoLockClosedOutline } from "react-icons/io5";
 
@@ -33,10 +33,15 @@ import {
   Flex,
   Text,
   Button,
-  Checkbox,
   Link,
   Image,
   FormControl,
+  FormLabel,
+  Input,
+  InputLeftElement,
+  InputGroup,
+  InputRightElement,
+  Icon,
 } from "@chakra-ui/react";
 import BodyLayout from "_organisms/BodyLayout";
 import styles from "./Login.module.css";
@@ -45,38 +50,28 @@ import styles from "./Login.module.css";
 
 export default function Login() {
   const dispatch = useDispatch();
-
-  const [remember, setRemember] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email) {
-      setRemember(true);
       setEmail(email);
     }
   }, []);
 
+  const updateEmail = (e) => setEmail(e.target.value);
+  const updatePassword = (e) => setPassword(e.target.value);
+
   const login = () => {
     const userCredentials = { email, password };
-
-    if (remember) {
-      localStorage.setItem("email", email);
-    }
-
     dispatch(attemptLogin(userCredentials)).catch(R.identity);
   };
 
   useKeyPress("Enter", login);
 
-  const rememberMe = () => {
-    localStorage.removeItem("email");
-    setRemember(!remember);
-  };
-
-  const updateEmail = (e) => setEmail(e.target.value);
-  const updatePassword = (e) => setPassword(e.target.value);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
   return (
     <BodyLayout>
@@ -120,24 +115,41 @@ export default function Login() {
 
             <Flex direction="column" mt={10} justify="center">
               <FormControl>
-                <FormInput
-                  onChange={updateEmail}
-                  placeholder="Email Address"
-                  value={email}
-                  type="email"
-                  leftIcon={IoPersonOutline}
-                  label="Email"
-                  size="lg"
-                />
-                <FormInput
-                  onChange={updatePassword}
-                  placeholder="Password"
-                  value={password}
-                  leftIcon={IoLockClosedOutline}
-                  type="password"
-                  label="Password"
-                  size="lg"
-                />
+                <FormLabel fontSize={14}>Email Address</FormLabel>
+                <InputGroup>
+                  <InputLeftElement pointerEvents="none">
+                    <Icon as={IoPersonOutline} w={5} h={5} mt={1} />
+                  </InputLeftElement>
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    variant="outline"
+                    mb={2}
+                    focusBorderColor="#F4B95F"
+                    onChange={updateEmail}
+                  />
+                </InputGroup>
+              </FormControl>
+
+                <FormControl>
+                <FormLabel fontSize={14}>Password</FormLabel>
+                <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Icon as={IoLockClosedOutline} w={5} h={5} mt={1} />
+                </InputLeftElement>
+                  <Input
+                    placeholder="Password"
+                    type={show ? 'text' : 'password'}
+                    variant="outline"
+                    focusBorderColor="#F4B95F"
+                    onChange={updatePassword}
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
 
               <Flex justify="start">
@@ -165,10 +177,6 @@ export default function Login() {
                   </Link>
                 </Text>
               </Flex>
-              <Checkbox defaultChecked={remember} onChange={rememberMe}>
-                {" "}
-                Remember Me{" "}
-              </Checkbox>
 
               <Button
                 mt={4}

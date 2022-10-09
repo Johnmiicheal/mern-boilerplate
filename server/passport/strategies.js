@@ -3,7 +3,7 @@ const { User } = require('../database/schemas');
 
 const Strategies = module.exports;
 
-Strategies.local = new LocalStrategy((email, password, done) => {
+Strategies.local = new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (email, password, done) => {
   User.findOne({ email }, (err, user) => {
     if (err) { return done(err); }
     if (!user) {

@@ -7,17 +7,15 @@ const router   = express.Router();
 module.exports = router;
 
 router.post('/checkuser', (req, res) => {
-  const email = req.body.email.toLowerCase();
-  const adminName = req.body.adminName.toLowerCase();
-
-  User.find({ email }, (err, users) => {
+  const adminName = typeof req.body.email === 'string' ? req.body.email.toLowerCase() : req.body.email;
+  User.find({ adminName }, (err, users) => {
     if (err) {
-      res.status(400).send({ message: 'Check User failed', err, email });
+      res.status(400).send({ message: 'Check User failed', err, adminName });
     }
     if (users && users[0]) {
-      res.send({ available: false, message: 'User exists', adminName, email });
+      res.send({ available: false, message: 'User exists', adminName });
     } else {
-      res.send({ available: true, message: 'User available', adminName, email });
+      res.send({ available: true, message: 'User available', adminName });
     }
   });
 });

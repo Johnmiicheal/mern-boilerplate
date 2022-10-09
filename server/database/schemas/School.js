@@ -4,11 +4,12 @@ const { Schema } = mongoose;
 
 const schoolSchema = new Schema({
   user: { type: Schema.ObjectId, ref: 'User', required: true },
-  schoolname: { type: String, require: true },
+  schoolName: { type: String, require: true },
   address: { type: String, require: true },
-  rcnumber: { type: Number, require: true, maxlength: 8 },
+  rcNumber: { type: Number, require: true, maxlength: 8 },
   state: { type: String, require: true },
   country: { type: String, require: true },
+  profile_img: { type: String },
   created_at: { type: Date, default: Date.now, immutable: true },
   updated_at: { type: Date },
 }, { versionKey: false });

@@ -7,11 +7,11 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
   user: Number,
-  email: { type: String, lowercase: true, required: true, unique: true, immutable: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profile_pic: { type: String },
   adminName: { type: String, maxlength: 20 },
-  phoneNumber: { type: Number, maxlength: 11, required: true },
+  phoneNumber: { type: Number, maxlength: 11, required: true, unique: true },
   created_at: { type: Date, default: Date.now, immutable: true },
   updated_at: { type: Date },
 }, { versionKey: false });

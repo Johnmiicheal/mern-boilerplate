@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'redux-first-history';
 import R from 'ramda';
 
-import Section from 'react-bulma-companion/lib/Section';
+import BodyLayout from '_organisms/BodyLayout';
 
 import Register from '_organisms/Register';
 
@@ -18,10 +18,8 @@ export default function RegisterPage() {
   }, [dispatch, user]);
 
   return (
-    <div>
-      <Section>
-        <Register />
-      </Section>
-    </div>
+    <BodyLayout>
+      <Register />
+    </BodyLayout>
   );
 }

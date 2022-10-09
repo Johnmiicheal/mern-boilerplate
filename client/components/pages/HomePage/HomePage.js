@@ -1,13 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'redux-first-history';
 import R from 'ramda';
-
-import Section from 'react-bulma-companion/lib/Section';
-import Container from 'react-bulma-companion/lib/Container';
-import Title from 'react-bulma-companion/lib/Title';
-
-import styles from './styles.module.css';
+import { Flex } from '@chakra-ui/react';
+import Home from '_organisms/Home';
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -20,14 +17,8 @@ export default function HomePage() {
   }, [dispatch, user]);
 
   return (
-    <div className={styles.root}>
-      <Section>
-        <Container>
-          <Title size="1">
-            Home Page
-          </Title>
-        </Container>
-      </Section>
-    </div>
+    <Flex minW="full">
+      <Home />
+    </Flex>
   );
 }

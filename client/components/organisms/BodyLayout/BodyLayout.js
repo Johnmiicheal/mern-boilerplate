@@ -12,9 +12,9 @@ import {
 export default function BodyLayout({ children }) {
   return (
     <Center>
-      <Box minH="100vh" minW="full" bg="gray.300">
+      <Box minH="100vh" overflowY="hidden" minW="full" bg="white">
 
-        <Flex justify="center">
+        <Flex justify="center" minH="full">
           {children}
         </Flex>
 
@@ -24,5 +24,5 @@ export default function BodyLayout({ children }) {
 }
 
 BodyLayout.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired,
 };
